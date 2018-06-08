@@ -6,18 +6,14 @@ const Provider = require('oidc-provider');
 const app = express();
 
 const clients = [{
-    client_id: 'test_oauth_app',
-    client_secret: 'super_secret',
-    grant_types: ['client_credentials'],
-    redirect_uris: [],
-    response_types: [],
+    client_id: 'test_implicit_app',
+    grant_types: ['implicit'],
+    response_types: ['id_token'],
+    redirect_uris: ['https://testapp/signin-oidc'],
+    token_endpoint_auth_method: 'none'
 }];
 
 const oidc = new Provider('http://localhost:3000', {
-	features: {
-    clientCredentials: true,
-    introspection: true
-  },
 // By default, oidc-provider offers stub functionality for user authentication, suitable for test purposes only.
 	async findById(ctx, id) {
 	  return {
